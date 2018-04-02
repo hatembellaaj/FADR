@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"  xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">  
+<h:head>  
+    <title>Liste des Fiches</title>  
+   
+</h:head>  
+<h:body > 
+        <f:view >
+
+            <p:layout style="width: 1000px;background-image:url('images/BG.gif')" fullPage="true">
+                <p:layoutUnit position="north">
+                    <ui:include src="/templates/template_header.xhtml" />
+                </p:layoutUnit>
+                <p:layoutUnit position="west" size="100" resizable="true" closable="false" collapsible="true" minSize="200">
+                    <div id="left_content">
+                        <ui:insert name="left_content" >
+                            <ui:include src="/templates/template_left_content.xhtml" />
+                        </ui:insert>
+                    </div>
+                </p:layoutUnit>
+                <p:layoutUnit position="center" style="width: 1000px">      
+     
+    
+    <h:form id="form1" style="width: 1200px">  
+        
+         
+         
+        <p:dataTable  id="TableService" value="#{ListeFichesBean.listFiches}" var="fiche"  paginator="true" rows="5" resizableColumns="true" style="font-family:times new roman, times, serif;font-size: 14px ;margin-bottom:20px" 
+                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                          rowsPerPageTemplate="5,10,15">
+ 
+            <f:facet name="header">  
+                Liste des Fiches
+            </f:facet>
+
+            <p:column headerText="Code" sortBy="#{fiche.code}"  filterBy="#{fiche.code}" filterMatchMode="contains" filterStyle="width: 40px" style="font-family:times new roman, times, serif;font-size: 14px ;width: 40px">  
+                <h:outputText value="#{fiche.code}" />  
+            </p:column> 
+            
+            <p:column headerText="Num Dossier" sortBy="#{fiche.NDossier}"  filterBy="#{fiche.NDossier}" filterMatchMode="contains" filterStyle="width: 100px" style="font-family:times new roman, times, serif;font-size: 14px ;width: 40px">  
+                <h:outputText value="#{fiche.NDossier}" />  
+            </p:column> 
+
+            <p:column headerText="Nom" sortBy="#{ListeFichesBean.getNomPatientParnDossier(fiche.NDossier)}"  filterBy="#{ListeFichesBean.getNomPatientParnDossier(fiche.NDossier)}" filterMatchMode="contains" filterStyle="width: 100px" style="font-family:times new roman, times, serif;font-size: 14px ;width: 40px">  
+                <h:outputText value="#{ListeFichesBean.getNomPatientParnDossier(fiche.NDossier)}" />  
+            </p:column> 
+
+            <p:column headerText="Prenom" sortBy="#{ListeFichesBean.getPrenomPatientParnDossier(fiche.NDossier)}"  filterBy="#{ListeFichesBean.getPrenomPatientParnDossier(fiche.NDossier)}" filterMatchMode="contains" filterStyle="width: 100px" style="font-family:times new roman, times, serif;font-size: 14px ;width: 40px">  
+                <h:outputText value="#{ListeFichesBean.getPrenomPatientParnDossier(fiche.NDossier)}" />  
+            </p:column> 
+            
+            
+            <p:column headerText="Date diagnostic" sortBy="#{fiche.dateDiagnostic}"  filterBy="#{fiche.dateDiagnostic}" filterMatchMode="contains" filterStyle="width: 100px" style="font-family:times new roman, times, serif;font-size: 14px ;width: 40px">  
+                <h:outputText value="#{fiche.dateDiagnostic}" />  
+            </p:column>             
+            <p:column headerText="Date enregistrement" sortBy="#{fiche.dateEnregistrement}"  filterBy="#{fiche.dateEnregistrement}" filterMatchMode="contains" filterStyle="width: 100px" style="font-family:times new roman, times, serif;font-size: 14px ;width: 40px">  
+                <h:outputText value="#{fiche.dateEnregistrement}" />  
+            </p:column>              
+
+            
+                
+  
+            <p:column headerText="Hopital" sortBy="#{fiche.hopital}"  filterBy="#{fiche.hopital}" filterMatchMode="contains" filterStyle="width: 100px" style="font-family:times new roman, times, serif;font-size: 14px ;width: 40px">  
+                <h:outputText value="#{ListeFichesBean.getNomHopitalParNHopital(fiche.hopital)}" />  
+            </p:column>   
+            
+            <p:column headerText="Service" sortBy="#{fiche.service}"  filterBy="#{fiche.service}" filterMatchMode="contains" filterStyle="width: 100px" style="font-family:times new roman, times, serif;font-size: 14px ;width: 40px">  
+                <h:outputText value="#{ListeFichesBean.getNomServiceParNService(fiche.service)}" />  
+            </p:column>   
+
+
+          <p:column style="width: 20px; text-align: center">  
+              <p:commandButton  icon="ui-icon-pencil" id="BtnModiFiche" ajax="true"   >  
+                  <f:param name="codefiche" value="#{fiche.NDossier}" />
+                </p:commandButton>
+            </p:column>
+            
+            <p:column style="width: 20px; text-align: center">  
+                <p:commandButton icon="ui-icon-folder-collapsed" id="Btnconsulterfiche" action="#{ModifierFicheBean.ModifierFiche()}" ajax="true"  >  
+                    <f:param name="codefiche" value="#{fiche.NDossier}" />
+                </p:commandButton>
+            </p:column>
+            
+            <p:column style="width: 50px; text-align: center">  
+                <p:commandButton icon="	ui-icon-print" id="BtnImprimerFiche" ajax="true" action="#{pdfMB.creatpdf()}">  
+                    <f:param name="codefiche" value="#{fiche.NDossier}" />
+                </p:commandButton>
+            </p:column>             
+            
+            <p:column style="width: 20px; text-align: center">  
+                <p:commandButton icon="ui-icon-trash" id="Btndeletefiche" ajax="true" >  
+                    
+                </p:commandButton>
+            </p:column>
+
+                            <p:commandButton icon="ui-icon-document" style="width: 20px; height: 20px;" >
+                            
+                            </p:commandButton>            
+            <f:facet name="footer">
+                <div style="padding-right: 1500px">
+                    <p:commandButton id="addFicheBtn" icon="ui-icon-circle-plus" value="Nouvelle fiche" ajax="true" action='AjouterFiche?faces-redirect=true' /> 
+                </div>   
+                </f:facet>               
+            
+            
+            
+            
+            
+        </p:dataTable>  
+    </h:form> 
+        </p:layoutUnit>
+                <p:layoutUnit position="south"></p:layoutUnit>
+            </p:layout>
+       </f:view>             
+            
+</h:body>  
+  
+</html>
+
+

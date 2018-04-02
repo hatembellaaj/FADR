@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <f:view contentType="text/html">
+            <h:head>
+
+
+                <style type="text/css">
+                    .ui-layout-north {
+                        z-index:20 !important;
+                        overflow:visible !important;;
+                    }
+
+                    .ui-layout-north .ui-layout-unit-content {
+                        overflow:visible !important;
+                    }
+                </style>
+            </h:head>
+
+
+            <h:body>
+
+                <div style="position: absolute;z-index: 99999">
+                    <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">  
+                        <f:facet name="start">  
+                            <div class="loading" >
+                                <h:outputText value="Chargement ..." />
+                            </div>
+                        </f:facet>  
+
+                        <f:facet name="complete">  
+                            <h:outputText value="" />  
+                        </f:facet>  
+                    </p:ajaxStatus>
+                </div>
+
+                <div width="100%">
+                    <table width="100%">
+                        <tr width="700px%">
+                            <td width="300px"/>
+                            
+                            <td ><img src="./images/bnr-left.png" align="center"></img></td>
+                        </tr>
+                    </table>
+                </div>
+            </h:body>
+
+        </f:view>
+    </ui:composition>
+</html>
+

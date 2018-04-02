@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"  xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">  
+<h:head>  
+    <title>Liste des Hopitaux</title>  
+   
+</h:head>  
+<h:body> 
+
+                    
+                    
+    <p:dialog id="AjouterHop" widgetVar="$AjouterHop" header="Ajouter Hopital" modal="true" hideEffect="explode" appendTo="@(body)" resizable="false" draggable="false" closeOnEscape="true">
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel for="nomHopital" value="Nom:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:65px"/>
+                <p:inputText id="nomHopital"  value="#{ListeHopitauxBean.newhopital.nomHopitale}" label="nomHopital" style="font-family:times new roman, times, serif; font-size: 18px"/>
+            </h:panelGrid>
+            
+            <p:column>
+                <p:outputLabel style="padding-right: 75px"/>
+                <p:commandButton value="Ajouter"  id="AddButtonId" ajax="true" icon="ui-icon-disk" action="#{ListeHopitauxBean.add()}"/>  
+                <p:outputLabel  style="padding-right: 10px"/>
+                <p:commandButton value ="Quitter" id="CancelButtonId"  icon="ui-icon-closethick" action="Welcome?faces-redirect=true" />
+            </p:column>            
+        </h:form>
+    </p:dialog>
+    
+    
+    <p:dialog id="ModifierHop" widgetVar="$ModifierHop" header="Modifier Hopital" modal="true" hideEffect="explode" appendTo="@(body)" resizable="false" draggable="false" closeOnEscape="true">
+        
+   
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel for="nomHopital" value="Nom:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:65px"/>
+                <p:inputText id="nomHopital"  value="#{ListeHopitauxBean.hopital.nomHopitale}" label="nomHopital" style="font-family:times new roman, times, serif; font-size: 18px"/>               
+            </h:panelGrid>
+    
+            <p:column>
+            <p:outputLabel style="padding-right: 75px"/>              
+            <p:commandButton value="Modifier"  id="UpdateButtonId" ajax="true" icon="ui-icon-disk" action="#{ListeHopitauxBean.update()}"/>      
+            <p:outputLabel  style="padding-right: 10px"/>
+            <p:commandButton value ="Quitter" id="CancelButtonId"  icon="ui-icon-closethick" action="Welcome?faces-redirect=true" />
+        </p:column>
+    
+     
+        
+    </p:dialog>
+    
+    
+    <p:dialog id="ChargerHop" widgetVar="$ChargerHop" header="Consulter Hopital" modal="true" hideEffect="explode" appendTo="@(body)" resizable="false" draggable="false" closeOnEscape="true">
+        
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="10">
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel for="nomHopital" value="Nom:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:65px"/>
+                <p:inputText id="nomHopital"  value="#{ListeHopitauxBean.hopital.nomHopitale}" label="nomHopital" style="font-family:times new roman, times, serif; font-size: 18px"/>               
+            </h:panelGrid>            </h:panelGrid>
+        
+        <div style="padding-left: 220px"   >
+            <p:commandButton value="Quitter"  id="ConsultButtonId" ajax="true" icon="ui-icon-closethick" action="Welcome?faces-redirect=true"/>      
+        </div>
+    </h:form>        
+    </p:dialog>
+
+   
+        <f:view>
+
+            <p:layout style="width: 1000px;" fullPage="true">
+                <p:layoutUnit position="north">
+                    <ui:include src="/templates/template_header.xhtml" />
+                </p:layoutUnit>
+                <p:layoutUnit position="west" size="100" resizable="true" closable="false" collapsible="true" minSize="200">
+                    <div id="left_content">
+                        <ui:insert name="left_content" >
+                            <ui:include src="/templates/template_left_content.xhtml" />
+                        </ui:insert>
+                    </div>
+                </p:layoutUnit>
+                <p:layoutUnit position="center">     
+     
+    
+    <h:form id="form1" style="width: 1200px">  
+        <p:dataTable  id="TableHopital" value="#{ListeHopitauxBean.listHopitals}" var="hopital"  paginator="true" rows="5" resizableColumns="true" style="margin-bottom:20px" 
+                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                          rowsPerPageTemplate="5,10,15">
+ 
+            <f:facet name="header">  
+                Liste des Hopitaux 
+            </f:facet>
+
+            <p:column headerText="Code" sortBy="#{hopital.codehopitale}" width="40"  filterBy="#{hopital.codehopitale}" filterMatchMode="contains" filterStyle="width: 40px" style="width: 40px">  
+                <h:outputText value="#{hopital.codehopitale}" />  
+            </p:column> 
+            
+            <p:column headerText="Nom" sortBy="#{hopital.nomHopitale}" width="100"  filterBy="#{hopital.nomHopitale}" filterMatchMode="contains" filterStyle="width: 100px" style="width: 100px">  
+                <h:outputText value="#{hopital.nomHopitale}" />  
+            </p:column> 
+            
+          <p:column style="width: 20px; text-align: center">  
+              <p:commandButton icon="ui-icon-pencil" id="BtnModifHopital" ajax="true" actionListener="#{ListeHopitauxBean.showResultModification()}" update=":ModifierHop" oncomplete="PF('$ModifierHop').show()" >  
+                    <f:param name="hopital" value="#{hopital.nomHopitale}" />
+                </p:commandButton>
+            </p:column>
+            
+            <p:column style="width: 20px; text-align: center">  
+                <p:commandButton icon="ui-icon-folder-collapsed" id="Btnconsulterhopital" ajax="true" actionListener="#{ListeHopitauxBean.showResultloading()}" update=":ChargerHop" oncomplete="PF('$ChargerHop').show()">  
+                    <f:param name="hopital" value="#{hopital.nomHopitale}" />
+                </p:commandButton>
+            </p:column>
+            
+            <p:column style="width: 20px; text-align: center">  
+                
+                <p:commandButton icon="ui-icon-trash" ajax="true" actionListener="#{ListeHopitauxBean.ShowResults(hopital)}" update="confirmDialog" oncomplete="PF('confirmDialog').show()" />  
+                <p:confirmDialog id="confirmDialog" appendTo="@(body)" widgetVar="confirmDialog"  header="Suppression" message="Êtes-vous sûr de vouloir supprimer l'hopital #{ListeHopitauxBean.hopital.nomHopitale} ?">  
+                    <div>
+                        <p:commandButton value="Oui" update=":form1:TableHopital" action="#{ListeHopitauxBean.Delete(hopital)}" process="@this"  onclick="PF('confirmDialog').hide();" />  
+                        <p:commandButton value="Non" onclick="PF('confirmDialog').hide();" type="button" />
+                    </div>
+                      
+                </p:confirmDialog> 
+                
+            </p:column>
+
+            <f:facet name="footer">
+                <div style="padding-right: 1500px">
+                    <p:commandButton id="addHopitalBtn" icon="ui-icon-circle-plus" value="Nouveau" ajax="true" update=":AjouterHop" oncomplete="PF('$AjouterHop').show()" /> 
+                </div>   
+                </f:facet>           
+                  
+
+        </p:dataTable>  
+    </h:form> 
+                    
+                                        </p:layoutUnit>
+                <p:layoutUnit position="south"></p:layoutUnit>
+            </p:layout>
+       </f:view>  
+</h:body>  
+
+    
+
+    
+</html>
+
+

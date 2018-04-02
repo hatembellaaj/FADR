@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"  xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">  
+<h:head>  
+    <title>Tableau de bord</title>  
+   
+</h:head>  
+ 
+<h:body> 
+    
+    
+            <f:view>
+                
+             
+
+            <p:layout style="width: 1000px;" fullPage="true">
+                <p:layoutUnit position="north">
+                    <ui:include src="/templates/template_header.xhtml" />
+                </p:layoutUnit>
+                <p:layoutUnit position="west" size="100" resizable="true" closable="false" collapsible="true" minSize="200">
+                    <div id="left_content">
+                        <ui:insert name="left_content" >
+                            <ui:include src="/templates/template_left_content.xhtml" />
+                        </ui:insert>
+                    </div>
+                </p:layoutUnit>
+                <p:layoutUnit position="center">   
+                    
+                    
+                    
+                    
+                    <h:form>
+                            <p:dialog id="AfficheKM" widgetVar="$AfficheKM" header="Kaplan Meier Estimator" modal="true" hideEffect="explode" appendTo="@(body)" resizable="false" draggable="false" closeOnEscape="true">
+        <h:form enctype="multipart/form-data" >
+            <img   src="http://fanconi-tunisie.net/test.png" style="width: 600px;height: 600px" alt="KM Estimator" />
+        </h:form>
+    </p:dialog>
+                        
+
+                                   
+                
+                    <p:commandButton  value="KM" ajax="true" action="#{rapportMB.ComputeKM}" oncomplete="PF('$AfficheKM').show()" /> 
+           
+              
+                    </h:form>
+    
+
+                    
+                    
+                    
+    <h:form id="form1" style="width: 1200px">
+        <h:panelGrid id="grid" cellpadding="5" columns="2" style="margin-bottom:10px" bgcolor="#ffa90a">
+            <p:outputLabel  value="Paramètres" style="font-family:times new roman, times, serif;font-size: 18px ; padding-right:5px;" />
+            <p:selectOneMenu id="parameter" value="#{rapportMB.criterium}"  style="font-family:times new roman, times, serif; font-size: 18px; width: 200px;" >
+                               <f:selectItems value="#{rapportMB.parameters}"/>
+            </p:selectOneMenu> 
+
+  
+        </h:panelGrid>            
+        <p:commandButton value="Submit Fiche" ajax="true"  actionListener="#{rapportMB.afficheStat}" />
+
+        <h:panelGrid cellpadding="5" columns="2">
+            <p:chart id = "pieChart" type="pie" model="#{rapportMB.pieChartModel}" style="height:550px;width: 550px"/>                                  
+            <p:chart id = "barChart" type="bar" model="#{rapportMB.barModel}" style="height:550px;width: 550px"/>                             
+        </h:panelGrid>
+        
+    </h:form>
+    
+    <h:form id="form2" style="width: 1200px">   
+        <h:panelGrid id="grid2" cellpadding="5" columns="2" style="margin-bottom:10px" bgcolor="#ffd000">
+            <p:outputLabel  value="Paramètres" style="font-family:times new roman, times, serif;font-size: 18px ; padding-right:5px;" />
+            <p:selectOneMenu id="parameterPatient" value="#{rapportMB.criteriumPatient}"  style="font-family:times new roman, times, serif; font-size: 18px; width: 200px;"  >
+                <f:selectItems value="#{rapportMB.parametersPatient}"/>
+            </p:selectOneMenu> 
+
+        </h:panelGrid>            
+        <p:commandButton value="Submit Patient" ajax="true"  action="#{rapportMB.afficheStatPatient}"  />
+
+        <h:panelGrid cellpadding="5" columns="2">
+            <p:chart id = "pieChartPatient" type="pie" model="#{rapportMB.pieChartModelPatient}" style="height:550px;width: 550px"/>                                  
+            <p:chart id = "barChartPatient" type="bar" model="#{rapportMB.barModelPatient}" style="height:550px;width: 550px"/>                             
+        </h:panelGrid>
+        
+    </h:form>
+                    
+                </p:layoutUnit>
+            </p:layout>
+                  
+                    </f:view>
+
+
+    
+    
+</h:body>  
+
+
+
+    
+</html>
+
+

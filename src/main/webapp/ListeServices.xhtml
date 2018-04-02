@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"  xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">  
+<h:head>  
+    <title>Liste des Services</title>  
+   
+</h:head>  
+<h:body> 
+
+    <p:dialog id="AjouterServ" widgetVar="$AjouterServ" header="Ajouter Service" modal="true" hideEffect="explode" appendTo="@(body)" resizable="false" draggable="false" closeOnEscape="true">
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel for="nomService" value="Nom:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:65px"/>
+                <p:inputText id="nomService"  value="#{ListeServicesBean.newservice.nomService}" label="nomService" style="font-family:times new roman, times, serif; font-size: 18px"/>
+            </h:panelGrid>
+            
+            <p:column>
+                <p:outputLabel style="padding-right: 75px"/>
+                <p:commandButton value="Ajouter"  id="AddButtonId" ajax="true" icon="ui-icon-disk" action="#{ListeServicesBean.add()}"/>  
+                <p:outputLabel  style="padding-right: 10px"/>
+                <p:commandButton value ="Quitter" id="CancelButtonId"  icon="ui-icon-closethick" action="Welcome?faces-redirect=true" />
+            </p:column>            
+        </h:form>
+    </p:dialog>
+    
+    
+    <p:dialog id="ModifierServ" widgetVar="$ModifierServ" header="Modifier Service" modal="true" hideEffect="explode" appendTo="@(body)" resizable="false" draggable="false" closeOnEscape="true">
+        
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel for="nomService" value="Nom:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:65px"/>
+                <p:inputText id="nomService"  value="#{ListeServicesBean.service.nomService}" label="nomService" style="font-family:times new roman, times, serif; font-size: 18px"/>               
+            </h:panelGrid>
+    
+            <p:column>
+            <p:outputLabel style="padding-right: 75px"/>              
+            <p:commandButton value="Modifier"  id="UpdateButtonId" ajax="true" icon="ui-icon-disk" action="#{ListeServicesBean.update()}"/>      
+            <p:outputLabel  style="padding-right: 10px"/>
+            <p:commandButton value ="Quitter" id="CancelButtonId"  icon="ui-icon-closethick" action="Welcome?faces-redirect=true" />
+        </p:column>
+    
+        </h:form>
+        
+    </p:dialog>
+    
+    
+    <p:dialog id="ChargerServ" widgetVar="$ChargerServ" header="Consulter Service" modal="true" hideEffect="explode" appendTo="@(body)" resizable="false" draggable="false" closeOnEscape="true">
+        
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="10">
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel for="nomService" value="Nom:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:65px"/>
+                <p:inputText id="nomService"  value="#{ListeServicesBean.service.nomService}" label="nomService" style="font-family:times new roman, times, serif; font-size: 18px"/>               
+            </h:panelGrid>            </h:panelGrid>
+        
+        <div style="padding-left: 220px"   >
+            <p:commandButton value="Quitter"  id="ConsultButtonId" ajax="true" icon="ui-icon-closethick" action="Welcome?faces-redirect=true"/>      
+        </div>
+    </h:form>        
+    </p:dialog>
+
+    
+        <f:view>
+
+            <p:layout style="width: 1000px;" fullPage="true">
+                <p:layoutUnit position="north">
+                    <ui:include src="/templates/template_header.xhtml" />
+                </p:layoutUnit>
+                <p:layoutUnit position="west" size="100" resizable="true" closable="false" collapsible="true" minSize="200">
+                    <div id="left_content">
+                        <ui:insert name="left_content" >
+                            <ui:include src="/templates/template_left_content.xhtml" />
+                        </ui:insert>
+                    </div>
+                </p:layoutUnit>
+                <p:layoutUnit position="center">      
+     
+    
+    <h:form id="form1" style="width: 1200px">  
+        <p:dataTable  id="TableService" value="#{ListeServicesBean.listServices}" var="service"  paginator="true" rows="5" resizableColumns="true" style="margin-bottom:20px" 
+                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                          rowsPerPageTemplate="5,10,15">
+ 
+            <f:facet name="header">  
+                Liste des Services
+            </f:facet>
+
+            <p:column headerText="Code" sortBy="#{service.codeService}"  filterBy="#{service.codeService}" filterMatchMode="contains" filterStyle="width: 40px" style="width: 40px">  
+                <h:outputText value="#{service.codeService}" />  
+            </p:column> 
+            
+            <p:column headerText="Nom" sortBy="#{service.nomService}"  filterBy="#{service.nomService}" filterMatchMode="contains" filterStyle="width: 100px" style="width: 100px">  
+                <h:outputText value="#{service.nomService}" />  
+            </p:column> 
+            
+            <p:column style="width: 20px; text-align: center">  
+                <p:commandButton icon="ui-icon-pencil" id="BtnModifService" ajax="true" actionListener="#{ListeServicesBean.showResultModification()}" update=":ModifierServ" oncomplete="PF('$ModifierServ').show()" >  
+                    <f:param name="service" value="#{service.nomService}" />
+                </p:commandButton>
+            </p:column>
+            
+            <p:column style="width: 20px; text-align: center">  
+                <p:commandButton icon="ui-icon-folder-collapsed" id="BtnconsulterService" ajax="true" actionListener="#{ListeServicesBean.showResultloading()}" update=":ChargerServ" oncomplete="PF('$ChargerServ').show()">  
+                    <f:param name="service" value="#{service.nomService}" />
+                </p:commandButton>
+            </p:column>
+            
+            <p:column style="width: 20px; text-align: center">  
+                
+                <p:commandButton icon="ui-icon-trash" ajax="true" actionListener="#{ListeServicesBean.ShowResults(service)}" update="confirmDialog" oncomplete="PF('confirmDialog').show()" />  
+                <p:confirmDialog id="confirmDialog" appendTo="@(body)" widgetVar="confirmDialog"  header="Suppression" message="Êtes-vous sûr de vouloir supprimer le service #{ListeServicesBean.service.nomService} ?">  
+                    <div>
+                        <p:commandButton value="Oui" update=":form1:TableService" action="#{ListeServicesBean.Delete(service)}" process="@this"  onclick="PF('confirmDialog').hide();" />  
+                        <p:commandButton value="Non" onclick="PF('confirmDialog').hide();" type="button" />
+                    </div>
+                      
+                </p:confirmDialog> 
+                
+            </p:column>
+
+            <f:facet name="footer">
+                <div style="padding-right: 1500px">
+                    <p:commandButton id="addServiceBtn" icon="ui-icon-circle-plus" value="Nouveau" ajax="true" update=":AjouterServ" oncomplete="PF('$AjouterServ').show()" /> 
+                </div>   
+            </f:facet>                             
+        </p:dataTable>  
+    </h:form> 
+        </p:layoutUnit>
+                <p:layoutUnit position="south"></p:layoutUnit>
+            </p:layout>
+       </f:view>             
+            
+</h:body>  
+  
+</html>
+
+

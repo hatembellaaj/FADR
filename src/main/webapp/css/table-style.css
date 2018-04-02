@@ -1,0 +1,15 @@
+.order-table{   
+	border-collapse:collapse;
+}
+ 
+ 
+.order-table-odd-row{
+	text-align:center;
+	border-top:1px solid #BBBBBB;
+}
+ 
+.order-table-even-row{
+	text-align:center;
+	border-top:1px solid #BBBBBB;
+}
+

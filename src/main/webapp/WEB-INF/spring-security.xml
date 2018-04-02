@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:p="http://www.springframework.org/schema/p"
+             xmlns:util="http://www.springframework.org/schema/util"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-3.1.xsd
+http://www.springframework.org/schema/util
+http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+    
+
+    <http use-expressions="true">
+        <intercept-url pattern="/ListeHopitaux.jsf" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+        <intercept-url pattern="/ListeServices.jsf" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+        <intercept-url pattern="/ListeMedecins.jsf" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+        <intercept-url pattern="/ListeFiches.jsf" access="hasAnyRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/pages/users.jsf" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/AjouterFiche.jsf" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/ModifierFiche.jsf" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/rapport.jsf" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/modifyTest.jsf" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+        <!--
+        <access-denied-handler error-page="/403.jsf" />-->
+        <!-- access denied page
+        <access-denied-handler error-page="/403.jsf" />-->
+        <form-login login-page="/index.jsf" />  
+
+        <logout logout-success-url="/index.jsf" />                  
+       
+    </http>    
+
+ 
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider>
+           
+                <jdbc-user-service data-source-ref="dataSource"
+                               users-by-username-query="SELECT Login , Passwd, TypeUser as ROLE  FROM User where Login=?"
+                               authorities-by-username-query="SELECT Login, TypeUser as ROLE FROM User WHERE Login=?"
+            />
+    
+        </authentication-provider>
+    </authentication-manager>
+
+    <beans:bean id="LoginBean" name="LoginBean" class="com.tfar.beans.LoginBean" scope="prototype">
+        <beans:property name="authenticationManager" ref="authenticationManager"></beans:property>
+    </beans:bean>    
+
+</beans:beans>
+
+
+ 

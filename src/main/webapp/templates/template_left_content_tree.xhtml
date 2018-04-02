@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <f:view contentType="text/html">
+            <h:head>
+
+                <style type="text/css">
+                    .ui-layout-north {
+                        z-index:20 !important;
+                        overflow:visible !important;;
+                    }
+
+                    .ui-layout-north .ui-layout-unit-content {
+                        overflow:visible !important;
+                    }
+                </style>
+            </h:head>
+
+
+            <h:body>
+
+                <p:menu style="width: 95%">
+                    <p:menuitem value="Centres"  url="/ListeHopitaux.jsf"/>
+                    <p:menuitem value="Services" url="/ListeServices.jsf"/>
+                    <p:menuitem value="Medecins" url="/ListeMedecins.jsf"/>  
+                    <p:menuitem value="Fiches" url="/ListeFiches.jsf"/>  
+                    <p:menuitem value="Statistiques" url="/rapport.jsf"/>
+                    <p:menuitem value="Test" url="/newTestxhtml.jsf"/>
+                    
+                    
+                </p:menu> 
+
+            </h:body>
+
+        </f:view>
+    </ui:composition>
+</html>
+

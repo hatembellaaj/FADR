@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"  xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">  
+<h:head>  
+    <title>Liste des Médecins</title>  
+   
+</h:head>  
+<h:body> 
+
+    <p:dialog id="AjouterMed" widgetVar="$AjouterMed" header="Ajouter Medecin" modal="true" hideEffect="explode" appendTo="@(body)" resizable="false" draggable="false" closeOnEscape="true">
+        <h:form enctype="multipart/form-data" >
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel for="nomMedecin" value="Nom:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:65px"/>
+                <p:inputText id="nomMedecin"  value="#{ListeMedecinsBean.newmedecin.nomMedecin}" label="nomMedecin" style="font-family:times new roman, times, serif; font-size: 18px"/>
+            </h:panelGrid>
+
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel for="prenomMedecin" value="Nom:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:65px"/>
+                <p:inputText id="prenomMedecin"  value="#{ListeMedecinsBean.newmedecin.prenomMedecin}" label="prenomMedecin" style="font-family:times new roman, times, serif; font-size: 18px"/>
+            </h:panelGrid>
+
+            <h:panelGrid columns="2" cellpadding="10">
+            <h:outputLabel for="hopital" value="Hopital:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:270px; padding-left: 30px"/>
+            <p:selectOneMenu id="hopital" value="#{ListeMedecinsBean.newmedecin.hopital}" effect="fold" >
+                <f:selectItem itemLabel="Select One" itemValue="" />
+                <f:selectItems value="#{ListeHopitauxBean.listHopitals}" var="hopitals" itemValue="#{hopitals.nomHopitale}" itemLabel="#{hopitals.nomHopitale}" />       
+            </p:selectOneMenu>   
+            </h:panelGrid>
+
+            <h:panelGrid columns="2" cellpadding="10">
+            <h:outputLabel for="service" value="Service:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:270px; padding-left: 30px"/>
+            <p:selectOneMenu id="service" value="#{ListeMedecinsBean.newmedecin.service}" effect="fold" editable="true">
+                <f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true" />
+                <f:selectItems value="#{ListeServicesBean.listServices}" var="services" itemValue="#{services.nomService}" itemLabel="#{services.nomService}" />       
+            </p:selectOneMenu>   
+            </h:panelGrid>
+
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel for="Adresse" value="Adresse:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:65px"/>
+                <p:inputText id="Adresse"  value="#{ListeMedecinsBean.newmedecin.adresseM}" label="adresseM" style="font-family:times new roman, times, serif; font-size: 18px"/>
+            </h:panelGrid>
+
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel for="tel" value="Tél:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:65px"/>
+                <p:inputText id="tel"  value="#{ListeMedecinsBean.newmedecin.telM}" label="tel" style="font-family:times new roman, times, serif; font-size: 18px"/>
+            </h:panelGrid>
+
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel for="fax" value="Fax:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:65px"/>
+                <p:inputText id="fax"  value="#{ListeMedecinsBean.newmedecin.faxM}" label="fax" style="font-family:times new roman, times, serif; font-size: 18px"/>
+            </h:panelGrid>
+
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel for="email" value="Email:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:65px"/>
+                <p:inputText id="email"  value="#{ListeMedecinsBean.newmedecin.emailM}" label="email" style="font-family:times new roman, times, serif; font-size: 18px"/>
+            </h:panelGrid>
+
+            <h:panelGrid columns="2" cellpadding="10">
+                <h:outputLabel for="url" value="URL:" style="font-family:times new roman, times, serif; font-size: 18px;padding-right:65px"/>
+                <p:inputText id="url"  value="#{ListeMedecinsBean.newmedecin.url}" label="url" style="font-family:times new roman, times, serif; font-size: 18px"/>
+            </h:panelGrid>            
+
+            <h:panelGrid columns="2" cellpadding="10">
+           
+                <p:growl id="messages" showDetail="true" />
+ 
+
+                
+                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}"
+                update="messages"
+                label="Choose file"
+                sizeLimit="1048576"
+                auto="true"
+                allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                invalidSizeMessage="The maximum file size allowed is 1 Megabyte !"
+                invalidFileMessage="You are allowed to upload only images !"
+                />
+                
+                
+                   
+            
+            </h:panelGrid>              
+
+            
+            
+            <p:column>
+                <p:outputLabel style="padding-right: 75px"/>
+                <p:commandButton value="Ajouter"  id="AddButtonId" ajax="false" icon="ui-icon-disk" actionListener="#{ListeMedecinsBean.addMedecin(fileUploadView)}"/>  
+                <p:outputLabel  style="padding-right: 10px"/>
+                <p:commandButton value ="Quitter" id="CancelButtonId"  icon="ui-icon-closethick" action="Welcome?faces-redirect=true" />
+            </p:column>            
+        </h:form>
+    </p:dialog>
+    
+        <f:view>
+
+            <p:layout style="width: 1000px;" fullPage="true">
+                <p:layoutUnit position="north">
+                    <ui:include src="/templates/template_header.xhtml" />
+                </p:layoutUnit>
+                <p:layoutUnit position="west" size="100" resizable="true" closable="false" collapsible="true" minSize="200">
+                    <div id="left_content">
+                        <ui:insert name="left_content" >
+                            <ui:include src="/templates/template_left_content.xhtml" />
+                        </ui:insert>
+                    </div>
+                </p:layoutUnit>
+                <p:layoutUnit position="center">   
+     
+    
+    <h:form id="form1" style="width: 1200px">  
+        <p:dataTable  id="TableHopital" value="#{ListeMedecinsBean.listMedecins}" var="medecin"  paginator="true" rows="5" resizableColumns="true" style="margin-bottom:20px" 
+                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                          rowsPerPageTemplate="5,10,15">
+ 
+            <f:facet name="header">  
+                Liste des Médecins 
+            </f:facet>
+
+            <p:column headerText="Code" sortBy="#{medecin.cin}"  filterBy="#{medecin.cin}" filterMatchMode="contains" filterStyle="width: 30px" style="width: 30px">  
+                <h:outputText value="#{medecin.cin}" />  
+            </p:column> 
+            
+            <p:column headerText="Nom" sortBy="#{medecin.nomMedecin}"  filterBy="#{medecin.nomMedecin}" filterMatchMode="contains" filterStyle="width: 50px" style="width: 50px">  
+                <h:outputText value="#{medecin.nomMedecin}" />  
+            </p:column> 
+            
+            <p:column headerText="Prénom" sortBy="#{medecin.prenomMedecin}"  filterBy="#{medecin.prenomMedecin}" filterMatchMode="contains" filterStyle="width: 50px" style="width: 50px">  
+                <h:outputText value="#{medecin.prenomMedecin}" />  
+            </p:column> 
+            
+            <p:column headerText="Hopital" sortBy="#{medecin.hopital}"  filterBy="#{medecin.hopital}" filterMatchMode="contains" filterStyle="width: 50px" style="width: 50px">  
+                <h:outputText value="#{medecin.hopital}" />  
+            </p:column> 
+
+            <f:facet name="footer">
+                <div style="padding-right: 1500px">
+                    <p:commandButton id="addMedBtn" icon="ui-icon-circle-plus" value="Nouveau" ajax="true" update=":AjouterMed" oncomplete="PF('$AjouterMed').show()" /> 
+                </div>   
+                </f:facet>           
+                  
+            
+         
+            
+        </p:dataTable>  
+    </h:form> 
+                    
+                                                            </p:layoutUnit>
+                <p:layoutUnit position="south"></p:layoutUnit>
+            </p:layout>
+       </f:view>  
+</h:body>  
+  
+</html>
+
+
