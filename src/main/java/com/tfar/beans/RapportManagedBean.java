@@ -329,6 +329,7 @@ public class RapportManagedBean implements Serializable {
                 while (it.hasNext()){
                     Object cle = it.next(); // tu peux typer plus finement ici
                     cs.set(cle,lf.get(cle)); // tu peux typer plus finement ici
+                    nbItems++;
                 }
                 barModelPatient.clear();
                 barModelPatient.addSeries(cs);                

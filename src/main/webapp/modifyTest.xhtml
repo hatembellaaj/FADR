@@ -138,22 +138,14 @@
                 </p:selectOneMenu> 
         <br />
     </ui:repeat>
-                 </h:panelGrid>
-
-
-                
-                
-                
+                 </h:panelGrid>                         
                 <h:panelGrid  bgcolor="#ffa90a" width='80%'> 
             <f:facet name="footer">
                 <p:commandButton value="Enregistrer"  actionListener="#{ModifierFicheBean.validcousins()}" oncomplete="editarDialog.hide();"/>
                                  
             </f:facet>  
                 </h:panelGrid>                
-                
-                
-                
-                
+              
         </h:form>
     </p:dialog>
         
@@ -165,7 +157,7 @@
                     <h:outputLabel style='padding-left:110px'/>
                     <h:outputLabel value="lien de parenté" style="font-family:times new roman, times, serif;font-size: 18px ; padding-right:10px;"/>
                     <h:outputLabel style='padding-left:90px'/>
-                    <h:outputLabel value="Type de Cacer" style="font-family:times new roman, times, serif;font-size: 18px ; padding-right:10px;"/>
+                    <h:outputLabel value="Type de Cancer" style="font-family:times new roman, times, serif;font-size: 18px ; padding-right:10px;"/>
                     <h:outputLabel style='padding-left:50px'/>
                     <h:outputLabel value="Age de découverte" style="font-family:times new roman, times, serif;font-size: 18px ; padding-right:10px;"/>
                 </h:panelGrid>
@@ -286,12 +278,13 @@
                     </p:column>
                      </ui:repeat>
                  </h:panelGrid>
-
-                <h:panelGrid  bgcolor="#ffa90a" width='100%'> 
-    <h:commandButton value="Save" >
-        <f:ajax listener="#{ModifierFicheBean.validMembres()}" render="@form" />
-    </h:commandButton>    
-                </h:panelGrid>
+                    
+                <h:panelGrid  bgcolor="#ffa90a" width='80%'> 
+            <f:facet name="footer">
+                <p:commandButton value="Enregistrer"  actionListener="#{ModifierFicheBean.validMembres()}" oncomplete="editarDialog.hide();"/>
+                                 
+            </f:facet>  
+                </h:panelGrid>                      
         </h:form>
     </p:dialog>
         
@@ -469,8 +462,8 @@
 
            
             <h:outputLabel for ="enqueteur" value="Medecin" style="font-family:times new roman, times, serif; font-size: 18px; "/>
-            <p:selectOneMenu id="enqueteur" effect="fold" editable="true" value="#{ModifierFicheBean.newfiche.medecin}">                
-                <f:selectItems value="#{ModifierFicheBean.listMedecins}" var="enqueteurs" itemValue="#{enqueteurs.cin}" itemLabel="#{enqueteurs.nomMedecin}" />
+            <p:selectOneMenu id="enqueteur" effect="fold" editable="true"  value="#{ModifierFicheBean.medecin}">                
+                <f:selectItems value="#{ModifierFicheBean.listMedecins}" var="enqueteurs" itemLabel="#{enqueteurs.nomMedecin}"/>
             </p:selectOneMenu>
      
         </h:panelGrid>

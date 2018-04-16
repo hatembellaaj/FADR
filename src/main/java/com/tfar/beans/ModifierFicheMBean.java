@@ -28,6 +28,7 @@ import com.tfar.entity.Hopitale;
 import com.tfar.entity.Service;
 import com.tfar.entity.Medecin;
 import com.tfar.entity.Membre;
+import com.tfar.entity.MembrePK;
 import com.tfar.services.CousinService;
 import com.tfar.services.CytogenetiqueService;
 import com.tfar.services.AndrogeneService;
@@ -319,12 +320,13 @@ public class ModifierFicheMBean implements Serializable {
         //medecinService.add(newmedecin, newservice); 
    //     newfiche.setMedecin(String.valueOf(medecinService.getMedecinParNom(newfiche.getMedecin()).getCin()));
         
-             
+        newfiche.setMedecin(medecinService.getMedecinParNom(medecin).getCin().toString());
         ficheService.update(newfiche);
         patientService.update(newpatient);
         System.out.println("Freres : "+freres.toString());
 
          
+        
         System.out.println("File " +newfiche.getNDossier()+ " successfully saved.");  
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Enregistrement de la fiche", "Enregistrée avec succès.");  
         RequestContext.getCurrentInstance().showMessageInDialog(message);  
@@ -402,9 +404,30 @@ public class ModifierFicheMBean implements Serializable {
     
     public void treatnbMembre()
     {
-        System.out.println("Modifier Membres - Treat Nb Membre");
+        System.out.println("Modifier Fiche - Treat Membres");
         membres = membreService.getListMembreParnDossier(newfiche.getNDossier());
-        System.out.println("Modifier Membres - Treat membre for update");    
+        System.out.println("Modifier Fiche - Treat membres for update");            
+        int nbTraitement = 0; 
+        System.out.println("......treatnbMembre ...");
+        
+        this.nbMembresUpdate =  this.newfiche.getMembre() - this.nbMembres;
+        System.out.println("......nbMembresUpdate =  " + nbMembresUpdate);
+        if (this.nbMembresUpdate > 0)
+            if (membres ==null)
+                membres = new ArrayList<Membre>();
+                System.out.println("......Traitement : membre = new ArrayList(); ...");
+                nbTraitement = this.newfiche.getMembre();
+                
+        for (int i = 0; i < this.nbMembresUpdate; i++)
+        {
+            System.out.println("Adding Membre"+i);
+            Membre c = new Membre();
+            membres.add(c);
+        } 
+        
+        
+        System.out.println("Update Membres : " + String.valueOf(this.nbMembresUpdate));
+ 
     }
     
     public int validfreres()
@@ -482,7 +505,40 @@ public class ModifierFicheMBean implements Serializable {
     }
     public void validMembres()
     {
+        if (!membres.isEmpty())
+        {
+            ListIterator<Membre> lc = membres.listIterator();
+            int i=0;
+            System.out.println("Nombre Membre : "+ membres.size());
+            System.out.println("membres : "+membres.toString());
+            while(lc.hasNext()){
+                Membre c = lc.next();
+                System.out.println("nbMembres "+this.nbMembres);
+                if (i< this.nbMembres )
+                {
+                    MembrePK cpk = new MembrePK(this.newfiche.getnDossier(),c.getMembrePK().getIdMembre());
+                    c.setMembrePK(cpk);
+                    membreService.update(c);
+                    System.out.println("Update membre "+c.getPrenomM());
+                }
+                else
+                {
+                    System.out.println("Num Dossier :"+this.newfiche.getnDossier());
+                 //   System.out.println("Place Membre :"+c.getMembrePK().getIdMembre());
+                    
+                    MembrePK cpk = new MembrePK(this.newfiche.getnDossier(),i);
+                    c.setMembrePK(cpk);
+                    membreService.add(c);
+                    System.out.println("Add Membre "+c.getPrenomM());
+                }
+                i++;
+            }
+        
+        
+        }
+        RequestContext.getCurrentInstance().closeDialog(null);
 
+        
     } 
     
     
